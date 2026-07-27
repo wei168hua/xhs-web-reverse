@@ -1,0 +1,11 @@
+{
+  "name": "xhs-web-reverse",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "Offline reconstruction + decoders for XHS Web signature headers (research only).",
+  "scripts": {
+    "verify": "node verify.js && node verify_mnsv2.js && node verify_xrap.js && node verify_full.js",
+    "demo": "node entry.js"
+  }
+}
