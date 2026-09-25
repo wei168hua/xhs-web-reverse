@@ -1,0 +1,36 @@
+# 此工作流将在创建发布时使用 node 运行测试，并向 GitHub Packages 发布一个包
+# 更多信息请参阅：https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
+
+名称: Node.js 包
+
+在:
+  发布:
+    类型: [创建]
+
+职位:
+  构建:
+    运行于: ubuntu-latest
+    步骤:
+      - 使用: actions/checkout@v4
+      - 使用: actions/setup-node@v4
+        与:
+          节点版本: 20
+      - 运行: npm ci
+      - 运行: npm test
+
+  发布-gpr:
+    需要: 构建
+    运行于: ubuntu-latest
+    权限:
+      目录: 阅读
+      包: 写入
+    步骤:
+      - 使用: actions/checkout@v4
+      - 使用: actions/setup-node@v4
+        与:
+          节点版本: 20
+          registry-url: https://npm.pkg.github.com/
+      - 运行: npm ci
+      - 运行: npm publish
+        环境:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
